@@ -93,10 +93,32 @@ export class Service{
 
     async uploadImage(file){
         try {
-            return await this.bucket.createFile()
+            return await this.bucket.createFile(
+                conf.appwriteBucketId,
+                ID.unique(),
+                file
+            )
         } catch (error) {
             throw error
         }
+    }
+
+    async deleteImage(fileId){
+        try {
+            return await this.bucket.deleteFile(
+                conf.appwriteBucketId,
+                fileId,
+            )
+        } catch (error) {
+            throw error;     
+        }
+    }
+
+    getFilePreview(fileId){
+        return this.bucket.getFilePreview(
+            conf.appwriteBucketId,
+            fileId,
+        )
     }
 }
 
